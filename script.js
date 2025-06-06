@@ -34,7 +34,7 @@ $(document).ready(function(){
     });
 
     var typed = new Typed(".typing-2", {
-        strings: ["Student", "Developer", "Leader", "Problem-Solver"],
+        strings: ["Machine Learning Enthusiast", "Strategic Thinker", "Insight Generator", "Problem-Solver"],
         typeSpeed: 100,
         backSpeed: 60,
         loop: true
@@ -63,3 +63,17 @@ $(document).ready(function(){
         }
     });
 });
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Add active class to clicked tab and related content
+            button.classList.add('active');
+            document.getElementById(button.getAttribute('data-tab')).classList.add('active');
+        });
+    });
