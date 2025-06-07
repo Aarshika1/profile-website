@@ -279,7 +279,6 @@ section .title::after{
     display: block;
     color: #8a2be2;
     background:#111;
-    margin-top: 10px;
     text-align: center;
 }
 
@@ -673,6 +672,24 @@ a:hover {
     .projects-content {
         flex-direction: column;
         align-items: center;
+    }
+    section .title::after {
+        display: block;
+        background: #fff;
+        font-size: 16px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 0 5px;
+        margin-top: 8px;
+    }
+    .projects .title::after,
+    .contact .title::after {
+        background: #111;
+    }
+    .skills .title::after,
+    .about .title::after {
+        background: #fff;
     }
 }
 .contact-link

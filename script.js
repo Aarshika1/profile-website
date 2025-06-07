@@ -3,8 +3,10 @@ $(document).ready(function(){
         // sticky navbar on scroll script
         if(this.scrollY > 20){
             $('.navbar').addClass("sticky");
+            $('#navbar-logo').attr('src', 'images/logo_black.webp');
         }else{
             $('.navbar').removeClass("sticky");
+            $('#navbar-logo').attr('src', 'images/logo.webp');
         }
         
         // scroll-up button show/hide script
