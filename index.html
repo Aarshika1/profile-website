@@ -330,7 +330,7 @@
   }
 
   .tab-btn.active,
-  .tab-btn:hover
+  .tab-btn:hover,
   .tab-btn:focus {
     background: var(--primary);
     color: #fff;
@@ -648,7 +648,7 @@
           <li><a href="#skills">Skills</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
-        <button id="themeToggle" aria-label="Toggle dark / light">
+        <button id="themeToggle" type="button" aria-label="Toggle dark / light">
           <i class="fa-solid fa-moon"></i>
         </button>
       </nav>
@@ -668,9 +668,12 @@
       </p>
 
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem;">
-        <a href="#contact" class="btn-primary">Let's Talk</a>
-        <a href="Aarshika Singh.pdf" target="_blank" class="btn-primary"><i class="fa-solid fa-file"></i>&nbsp;View CV</a>
-        <a href="mailto:aarshikasingh1343@gmail.com" class="btn-primary"><i class="fa-solid fa-envelope"></i>&nbsp;Email Me</a>
+        <a href="#contact" class="btn-primary">
+          <i class="fa-solid fa-paper-plane"></i>&nbsp;Let's Talk
+        </a>
+        <a href="Aarshika Singh.pdf" target="_blank" class="btn-primary">
+          <i class="fa-solid fa-file"></i>&nbsp;View CV
+        </a>
       </div>
     </div>
     <div class="hero-image">
@@ -686,21 +689,21 @@
       <h2 class="section-title">My Projects</h2>
 
       <div class="tabs">
-        <button class="tab-btn active" data-tab="ml">Machine Learning</button>
-        <button class="tab-btn" data-tab="dashboard">Dashboards</button>
-        <button class="tab-btn" data-tab="archived">Archived</button>
+        <button class="tab-btn active" data-tab="ml" role="tab">Machine Learning</button>
+        <button class="tab-btn" data-tab="dashboard" role="tab">Dashboards</button>
+        <button class="tab-btn" data-tab="archived" role="tab">Archived</button>
       </div>
 
       <!-- ML Projects -->
       <div class="tab-content active" id="ml">
-        <p class="section-subtitle" style="text-align:center;margin-bottom:1.5rem;">Real‑world ML projects showcasing analytical depth and predictive modeling.</p>
+        <h3 class="section-subtitle" style="text-align:center;margin-bottom:1.5rem;">Real‑world ML projects showcasing analytical depth and predictive modeling.</h3>
         <div class="projects-grid">
           <div class="project-card">
             <div class="icon"><i class="fas fa-smile"></i></div>
             <h3>Sentiment Analysis</h3>
             <p>Predicts movie review sentiments using machine learning.</p>
             <div class="links">
-              <a href="https://review-sentiment-analysis-with-ml.streamlit.app/" target="_blank">Live Demo</a>
+              <a href="https://review-sentiment-analysis-with-ml.streamlit.app/" target="_blank" rel="noopener">Live Demo</a>
             </div>
           </div>
           <div class="project-card">
@@ -708,7 +711,7 @@
             <h3>FPL Optimiser</h3>
             <p>Tools to optimise Fantasy Football teams using ML algorithms.</p>
             <div class="links">
-              <a href="https://fploptimiser-bcwqgawjkb2446ahkwdbet.streamlit.app/" target="_blank">Live Demo</a>
+              <a href="https://fploptimiser-bcwqgawjkb2446ahkwdbet.streamlit.app/" target="_blank" rel="noopener">Live Demo</a>
               <a href="documents/Optimiser Project Review.pdf" target="_blank">Project Review</a>
             </div>
           </div>
@@ -718,7 +721,7 @@
             <h3>Trade Clustering</h3>
             <p>K‑Means, DBSCAN, and GMM models to cluster trading days.</p>
             <div class="links">
-              <a href="https://trade-day-clustering.streamlit.app/" target="_blank">Live Demo</a>
+              <a href="https://trade-day-clustering.streamlit.app/" target="_blank" rel="noopener">Live Demo</a>
               <a href="documents/Trade Clustering Project Review.pdf" target="_blank">Project Review</a>
             </div>
           </div>
@@ -727,14 +730,14 @@
 
       <!-- Dashboards -->
       <div class="tab-content" id="dashboard">
-        <p class="section-subtitle" style="text-align:center;margin-bottom:1.5rem;">Interactive dashboards that deliver insights at a glance.</p>
+        <h3 class="section-subtitle" style="text-align:center;margin-bottom:1.5rem;">Interactive dashboards that deliver insights at a glance.</h3>
         <div class="projects-grid">
           <div class="project-card">
             <div class="icon"><i class="fas fa-gauge-high"></i></div>
             <h3>Player Comparison</h3>
             <p>Explore football player performance using visual dashboards.</p>
             <div class="links">
-              <a href="https://playercomparisondashboard-etfr73ibh3uukutgnsiodw.streamlit.app/" target="_blank">Live Demo</a>
+              <a href="https://playercomparisondashboard-etfr73ibh3uukutgnsiodw.streamlit.app/" target="_blank" rel="noopener">Live Demo</a>
             </div>
           </div>
           <div class="project-card">
@@ -742,7 +745,7 @@
             <h3>Match Shot Maps</h3>
             <p>Visual dashboard showcasing shots from Premier League games.</p>
             <div class="links">
-              <a href="https://matchdashboard-jrwtvhbf37skhptlfrzdxg.streamlit.app/" target="_blank">Live Demo</a>
+              <a href="https://matchdashboard-jrwtvhbf37skhptlfrzdxg.streamlit.app/" target="_blank" rel="noopener">Live Demo</a>
             </div>
           </div>
         </div>
@@ -750,14 +753,14 @@
 
       <!-- Archived -->
       <div class="tab-content" id="archived">
-        <p class="section-subtitle" style="text-align:center;margin-bottom:1.5rem;">Legacy and foundational full‑stack development projects.</p>
+        <h3 class="section-subtitle" style="text-align:center;margin-bottom:1.5rem;">Legacy and foundational full‑stack development projects.</h3>
         <div class="projects-grid">
           <div class="project-card">
             <div class="icon"><i class="fas fa-bug"></i></div>
             <h3>Track'em</h3>
             <p>Django app to manage and track bugs.</p>
             <div class="links">
-              <a href="https://github.com/Aarshika1/Track-em-Bugtracker" target="_blank">GitHub</a>
+              <a href="https://github.com/Aarshika1/Track-em-Bugtracker" target="_blank" rel="noopener">GitHub</a>
             </div>
           </div>
           <div class="project-card">
@@ -765,7 +768,7 @@
             <h3>Studyboard</h3>
             <p>Trello‑style planner built with React and Redux.</p>
             <div class="links">
-              <a href="https://github.com/Aarshika1/Studyplanner" target="_blank">GitHub</a>
+              <a href="https://github.com/Aarshika1/Studyplanner" target="_blank" rel="noopener">GitHub</a>
             </div>
           </div>
           <div class="project-card">
@@ -773,7 +776,7 @@
             <h3>Cryptotracker</h3>
             <p>Track real‑time crypto prices using API and React.</p>
             <div class="links">
-              <a href="https://github.com/Aarshika1/Cryptocurrency-Tracker" target="_blank">GitHub</a>
+              <a href="https://github.com/Aarshika1/Cryptocurrency-Tracker" target="_blank" rel="noopener">GitHub</a>
             </div>
           </div>
           <div class="project-card">
@@ -781,7 +784,7 @@
             <h3>Beer Game</h3>
             <p>React & Django app simulating supply chain management.</p>
             <div class="links">
-              <a href="https://github.com/Aarshika1/Beer-Game" target="_blank">GitHub</a>
+              <a href="https://github.com/Aarshika1/Beer-Game" target="_blank" rel="noopener">GitHub</a>
             </div>
           </div>
           <div class="project-card">
@@ -789,7 +792,7 @@
             <h3>BlendEats</h3>
             <p>LAMP‑based food exchange app with user listings.</p>
             <div class="links">
-              <a href="https://github.com/Aarshika1/BlendEats-FoodApp/tree/main/DBWS-Project" target="_blank">GitHub</a>
+              <a href="https://github.com/Aarshika1/BlendEats-FoodApp/tree/main/DBWS-Project" target="_blank" rel="noopener">GitHub</a>
             </div>
           </div>
           <div class="project-card">
@@ -797,7 +800,7 @@
             <h3>BASIC Interpreter</h3>
             <p>Python interpreter to execute BASIC‑like commands.</p>
             <div class="links">
-              <a href="https://github.com/Aarshika1/BASIC-Interpreter" target="_blank">GitHub</a>
+              <a href="https://github.com/Aarshika1/BASIC-Interpreter" target="_blank" rel="noopener">GitHub</a>
             </div>
           </div>
         </div>
@@ -872,8 +875,9 @@
   <!-- ========================= Footer ========================= -->
   <footer>
     <div class="social-links">
-      <a href="https://github.com/Aarshika1" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/aarshika-singh/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/Aarshika1" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/aarshika-singh/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:aarshikasingh1343@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
     </div>
     <span>&copy; 2025 Aarshika Singh. All rights reserved. Made with love</span>
   </footer>
