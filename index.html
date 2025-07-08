@@ -227,6 +227,10 @@
     transition: transform .25s;
   }
   #themeToggle:hover { transform: translateY(-2px); }
+  #themeToggle .fa-moon,
+  #themeToggle .fa-sun{transition:transform .6s ease;}
+  #themeToggle.spin .fa-moon,
+  #themeToggle.spin .fa-sun{transform:rotate(360deg);}
 
 
   .hero {
@@ -287,6 +291,7 @@
   .btn-primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 18px rgba(111, 85, 228, 0.12);
+    animation: pulse .4s ease-in-out forwards;
   }
 
   .about-card {
@@ -335,6 +340,14 @@
     transition: background 0.25s, color 0.25s;
     -webkit-tap-highlight-color: transparent;
     outline: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tab-btn::after{
+    content:"";position:absolute;inset:0;border-radius:inherit;
+    background:var(--primary);transform:scale(0);opacity:.15;
+    transition:transform .5s ease,opacity .5s ease;pointer-events:none;
   }
 
   .tab-btn.active,
@@ -343,6 +356,8 @@
     background: var(--primary);
     color: #fff;
   }
+
+  .tab-btn:active::after{transform:scale(1.6);opacity:0;transition:none;}
 
   .tab-btn:focus {
     outline: none;
@@ -361,6 +376,12 @@
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%   { transform: scale(1);   }
+    50%  { transform: scale(1.08);}
+    100% { transform: scale(1);   }
   }
 
   .projects-grid {
@@ -579,6 +600,7 @@
 
   .contact-form button:hover {
     opacity: 0.93;
+    animation: pulse .4s ease-in-out forwards;
   }
 
   footer {
@@ -621,6 +643,7 @@
     pointer-events: none;
     transition: opacity 0.3s, transform 0.3s;
     z-index: 110;
+    transform:translateY(10px);
   }
 
   #backToTop.show {
@@ -936,6 +959,9 @@
       const nowDark = !document.body.classList.contains('dark');
       enableDark(nowDark);
       localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+
+      themeToggle.classList.add('spin');
+      setTimeout(() => themeToggle.classList.remove('spin'), 600);
     });
 
     /* ---------- Logo scroll shrink ---------- */
