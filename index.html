@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aarshika Singh | Portfolio</title>
+
+  <link rel="preload" as="image" href="images/review-sentiment.gif" fetchpriority="low">
+  <link rel="preload" as="image" href="images/fpl-optimiser.gif" fetchpriority="low">
+  <link rel="preload" as="image" href="images/trade-clustering.gif" fetchpriority="low">
+  <link rel="preload" as="image" href="images/player-comparison.gif" fetchpriority="low">
+  <link rel="preload" as="image" href="images/match-shot.gif" fetchpriority="low">
+
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -628,6 +636,38 @@
   .social-links a:hover {
     transform: translateY(-2px);
   }
+
+  .floating-preview{
+    position: fixed;
+    top: 0; left: 0;
+    width: 420px; 
+    pointer-events: none;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.30);
+    opacity: 0;
+    transform: scale(.95);
+    transition: opacity .25s ease, transform .25s ease;
+    z-index: 9999;
+    background: var(--primary); 
+    overflow: hidden;
+  }
+  .floating-preview.active{
+    opacity: 1;
+    transform: scale(1);
+  }
+  .floating-preview img{display:block; width:100%;}
+  .floating-preview .preview-caption{
+    text-align:center; padding:.5rem 1rem;
+    font-weight:600; font-size:.9rem; color:#fff;
+    background:var(--primary);
+  }
+  .floating-preview .no-preview{
+    width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--primary);
+    color:#fff; font-weight:600; text-align:center;
+  }
+
   #backToTop {
     position: fixed;
     bottom: 30px;
@@ -734,7 +774,12 @@
             <h3>Sentiment Analysis</h3>
             <p>Predicts movie review sentiments using machine learning.</p>
             <div class="links">
-              <a href="https://review-sentiment-analysis-with-ml.streamlit.app/" target="_blank" rel="noopener">Live Demo</a>
+              <a class="with-preview"
+              data-preview="images/review-sentiment.gif"
+              href="https://review-sentiment-analysis-with-ml.streamlit.app/"
+              target="_blank" rel="noopener">
+                Live Demo
+              </a>
             </div>
           </div>
           <div class="project-card">
@@ -742,7 +787,12 @@
             <h3>FPL Optimiser</h3>
             <p>Tools to optimise Fantasy Football teams using ML algorithms.</p>
             <div class="links">
-              <a href="https://fploptimiser-bcwqgawjkb2446ahkwdbet.streamlit.app/" target="_blank" rel="noopener">Live Demo</a>
+              <a class="with-preview"
+              data-preview="images/fpl-optimiser.gif"
+              href="https://fploptimiser-bcwqgawjkb2446ahkwdbet.streamlit.app/" 
+              target="_blank" rel="noopener">
+                Live Demo
+              </a>
               <a href="documents/Optimiser Project Review.pdf" target="_blank">Project Review</a>
             </div>
           </div>
@@ -752,7 +802,12 @@
             <h3>Trade Clustering</h3>
             <p>K‑Means, DBSCAN, and GMM models to cluster trading days.</p>
             <div class="links">
-              <a href="https://trade-day-clustering.streamlit.app/" target="_blank" rel="noopener">Live Demo</a>
+              <a class="with-preview"
+              data-preview="images/trade-clustering.gif"
+              href="https://trade-day-clustering.streamlit.app/" 
+              target="_blank" rel="noopener">
+                Live Demo
+              </a>
               <a href="documents/Trade Clustering Project Review.pdf" target="_blank">Project Review</a>
             </div>
           </div>
@@ -768,7 +823,12 @@
             <h3>Player Comparison</h3>
             <p>Explore football player performance using visual dashboards.</p>
             <div class="links">
-              <a href="https://playercomparisondashboard-etfr73ibh3uukutgnsiodw.streamlit.app/" target="_blank" rel="noopener">Live Demo</a>
+              <a class="with-preview"
+              data-preview="images/player-comparison.gif"
+              href="https://playercomparisondashboard-etfr73ibh3uukutgnsiodw.streamlit.app/" 
+              target="_blank" rel="noopener">
+                Live Demo
+              </a>
             </div>
           </div>
           <div class="project-card">
@@ -776,7 +836,12 @@
             <h3>Match Shot Maps</h3>
             <p>Visual dashboard showcasing shots from Premier League games.</p>
             <div class="links">
-              <a href="https://matchdashboard-jrwtvhbf37skhptlfrzdxg.streamlit.app/" target="_blank" rel="noopener">Live Demo</a>
+              <a class="with-preview"
+              data-preview="images/match-shot.gif"
+              href="https://matchdashboard-jrwtvhbf37skhptlfrzdxg.streamlit.app/" 
+              target="_blank" rel="noopener">
+                Live Demo
+              </a>
             </div>
           </div>
         </div>
@@ -910,6 +975,7 @@
       <a href="https://www.linkedin.com/in/aarshika-singh/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
       <a href="mailto:aarshikasingh1343@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
     </div>
+    <p class="contact-location"><i class="fas fa-map-marker-alt"></i> London, UK</p>
     <span>&copy; 2025 Aarshika Singh. All rights reserved. Made with love.</span>
   </footer>
   <button id="backToTop" title="Back to top">↑</button>
@@ -981,6 +1047,35 @@
       alert('Thanks for reaching out — I’ll reply soon!');
       history.replaceState(null, '', location.pathname + location.hash);
     }
+
+    /* ─────────── hover GIF preview with graceful fallback ─────────── */
+    (function(){
+      const PLACEHOLDER = "images/preview-placeholder.png";   // fallback art
+      const previewBox  = document.createElement("div");
+      previewBox.className = "floating-preview";
+      document.body.appendChild(previewBox);
+
+      document.querySelectorAll(".with-preview").forEach(link => {
+        link.addEventListener("mouseenter", () => {
+          const src   = link.dataset.preview || PLACEHOLDER;
+          const test  = new Image();
+          test.onload = () => show(`<img src="${src}" alt="Preview"><div class="preview-caption">Demo Preview</div>`);
+          test.onerror = () => show(`<div class="no-preview">Preview<br>coming soon</div>`);
+          test.src = src;            // start loading – triggers onload/onerror
+        });
+        link.addEventListener("mousemove", e => {
+          previewBox.style.top  = `${e.clientY + 20}px`;
+          previewBox.style.left = `${e.clientX + 20}px`;
+        });
+        link.addEventListener("mouseleave", hide);
+      });
+
+      function show(html){
+        previewBox.innerHTML = html;
+        previewBox.classList.add("active");
+      }
+      function hide(){ previewBox.classList.remove("active"); }
+    })();
   </script>
 </body>
 </html>
