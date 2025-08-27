@@ -15,6 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -39,8 +40,8 @@
   }
 
   body.dark {
-    --bg:        #1e1a22;
-    --card-bg:   #292330;
+    --bg:        #120f16;
+    --card-bg:   #1a141f;
     --primary:   #be9cff;
     --secondary: #d59fff;
     --accent:    #ffb3d4;
@@ -715,9 +716,86 @@
       font-size: 1rem;
     }
   }
+  canvas.starfield {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  body:not(.dark) .starfield { display: none; }
+
+  .hero{
+    background:
+      radial-gradient(1000px circle at -15% 25%, var(--accent) 0%, transparent 50%),
+      radial-gradient(800px  circle at 115% 10%, var(--accent) 0%, transparent 50%);
+  }
+  body.dark .hero {
+    background:
+      radial-gradient(1000px circle at -15% 25%, rgba(255,255,255,.08) 0%, transparent 0%),
+      radial-gradient(800px  circle at 115% 10%, rgba(255,255,255,.08) 0%, transparent 0%);
+  }
+
+  body { position: relative; }
+  body.dark::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 150vw;
+    height: calc(100vh + 200px);
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(
+      circle at top center,
+      rgba(255,255,255,0.3) 0%,
+      rgba(255,255,255,0.1) 0%,
+      transparent 35%
+    );
+  }
+  .container, .hero-wrapper, section, footer { position: relative; z-index: 1; }
+  #chatbot{position:fixed;bottom:30px;right:30px;z-index:9999;font-family:'Inter',sans-serif}
+  #chat-window{
+    display:none;flex-direction:column;background:var(--card-bg);border:1px solid var(--border);
+    box-shadow:var(--shadow);padding:1rem;border-radius:1rem;width:600px;max-height:80vh;height:800px;
+    color:var(--text);margin-bottom:3.5rem;overflow:hidden
+  }
+  #chat-log{flex:1;overflow-y:auto;font-size:.95rem;margin-bottom:.5rem;display:flex;flex-direction:column;gap:1rem}
+  .chat-pair{border-top:1px solid var(--border);padding-top:.5rem}
+  .chat-msg.user{color:var(--primary)}
+  .chat-msg.bot{color:var(--secondary)}
+  #chat-input-area{display:flex;flex-direction:column;gap:.5rem;width:100%}
+  #chat-input{flex:1;padding:.6rem .8rem;border-radius:.6rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.95rem;min-width:0}
+  #send-chat,#clear-chat{
+    padding:.6rem 1rem;font-size:.9rem;font-weight:600;border:none;border-radius:1rem;background:var(--primary);color:#fff;cursor:pointer;box-shadow:var(--shadow)
+  }
+  #clear-chat{background:#d63031}
+  #toggle-chat{
+    position:fixed;bottom:30px;right:30px;font-size:1rem;padding:.8rem 1.4rem;white-space:nowrap;background:var(--primary);
+    color:#fff;box-shadow:var(--shadow);border:none;z-index:10000
+  }
+  #chat-suggestions{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem}
+  .faq-question{
+    background:var(--primary);color:#fff;padding:.4rem .9rem;border-radius:1rem;font-size:.85rem;cursor:pointer;white-space:nowrap
+  }
+  #send-chat:hover,#clear-chat:hover,#toggle-chat:hover,.faq-question:hover{
+    transform:translateY(-3px);box-shadow:0 6px 18px rgba(111,85,228,.12)
+  }
+  @media (max-width:768px){
+    #chat-window{width:85vw;height:70vh;right:5vw;padding:.8rem}
+    #send-chat,#clear-chat{width:100%}
+    #toggle-chat{bottom:15px;right:15px;padding:.6rem 1rem}
+  }
+  .spinner{
+    display:inline-block;width:1rem;height:1rem;border:2px solid rgba(0,0,0,.1);border-top:2px solid var(--primary);
+    border-radius:50%;animation:spin 1s linear infinite;margin-left:.5rem;vertical-align:middle
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
+  <canvas class="starfield"></canvas>
   <!-- ========================= Header / Navigation ========================= -->
   <header>
     <div class="container">
@@ -742,9 +820,9 @@
   <div class="container hero-wrapper">
     <div class="hero-text">
       <h1>Hi, I'm <span>Aarshika</span></h1>
-      <p>Software Developer & Data Engineer</p>
-
-      <h3 style="font-size:1.4rem;color:var(--secondary);margin-top:1.8rem;">Data & Tech Enthusiast</h3>
+      <h3 style="font-size:1.4rem;color:var(--secondary);margin-top:1.8rem;">
+        <span id="typed-text"></span>
+      </h3>
       <p style="font-size:1rem;color:var(--subtext);margin-bottom:1.5rem;">
         I'm a passionate professional transitioning from software development into analytical roles. My expertise lies in bridging business goals with data‑driven decisions. I'm actively seeking roles in Data or Business Analysis, where I can craft insightful dashboards, perform exploratory analysis, and communicate compelling data narratives.
       </p>
@@ -776,7 +854,7 @@
         <button class="tab-btn" data-tab="archived" role="tab">Archived</button>
       </div>
 
-      <!-- ML Projects -->
+      <!-- AI and Machine Learning Projects -->
       <div class="tab-content active" id="ml">
         <h3 class="section-subtitle" style="text-align:center;margin-bottom:1.5rem;">Real‑world ML projects showcasing analytical depth and predictive modeling.</h3>
         <div class="projects-grid">
@@ -822,6 +900,14 @@
               <a href="documents/Trade Clustering Project Review.pdf" target="_blank">Project Review</a>
             </div>
           </div>
+          <div class="project-card">
+            <div class="icon"><i class="fas fa-robot"></i></div>
+            <h3>Learning Language Model</h3>
+            <p>Training a custom LLM to generate answers based on given context</p>
+            <div class="links">
+              <a href="https://aarshika-chatbot.streamlit.app/" class="project-btn with-preview" data-preview="images/llm.gif" target="_blank">Live Demo</a>
+            </div>
+            </div>
         </div>
       </div>
 
@@ -1039,6 +1125,7 @@
 
       themeToggle.classList.add('spin');
       setTimeout(() => themeToggle.classList.remove('spin'), 600);
+      setTimeout(() => {typeof init === 'function' && init(); }, 0);
     });
 
     /* ---------- Logo scroll shrink ---------- */
@@ -1061,7 +1148,7 @@
 
     /* ─────────── hover GIF preview with graceful fallback ─────────── */
     (function(){
-      const PLACEHOLDER = "images/preview-placeholder.png";   // fallback art
+      const PLACEHOLDER = "images/preview-placeholder.png";
       const previewBox  = document.createElement("div");
       previewBox.className = "floating-preview";
       document.body.appendChild(previewBox);
@@ -1087,6 +1174,199 @@
       }
       function hide(){ previewBox.classList.remove("active"); }
     })();
+  </script>
+  <script>
+new Typed("#typed-text", {
+  strings: [
+    "Software Developer",
+    "ML Enthusiast",
+    "Aspiring Data Analyst"
+  ],
+  typeSpeed: 50,
+  backSpeed: 30,
+  backDelay: 1500,
+  loop: true
+});
+
+(function(){
+  const canvas = document.querySelector(".starfield");
+  if(!canvas) return;
+  const ctx = canvas.getContext("2d");
+  let w, h, dpr, stars = [], lastW, lastH, resizeTimeout;
+
+  function hexToRgb(hex){
+    hex = (hex||"").replace('#',''); if(hex.length===3) hex = hex.split('').map(c=>c+c).join('');
+    const int = parseInt(hex||"ffffff",16); return [(int>>16)&255,(int>>8)&255,int&255];
+  }
+
+  const isDark = () => document.body.classList.contains('dark');
+
+  const excludedEls = [
+    document.querySelector('.hero .hero-text'),
+    document.querySelector('header'),
+    document.querySelector('.hero .hero-image')
+  ].filter(Boolean);
+
+  let excludedRects = [];
+  function refreshRects(){
+    excludedRects = excludedEls.map(el => el.getBoundingClientRect());
+  }
+  refreshRects();
+  setInterval(refreshRects, 250);
+
+  function inExcluded(x, y){
+    for(const r of excludedRects){
+      if(x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return true;
+    }
+    return false;
+  }
+
+
+  function init(){
+    w = window.innerWidth; h = window.innerHeight; dpr = window.devicePixelRatio || 1;
+    canvas.width = w*dpr; canvas.height = h*dpr; canvas.style.width = w+"px"; canvas.style.height = h+"px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    stars = [];
+    const count = Math.floor((w*h)/14000);
+    for(let i=0;i<count;i++){
+      stars.push({ x:Math.random()*w, y:Math.random()*h, r:Math.random()*1.2+0.7,
+                   alpha:Math.random(), vx:(Math.random()-0.5)*0.2, vy:(Math.random()-0.5)*0.2 });
+    }
+    lastW = w; lastH = h;
+  }
+
+  function draw(){
+    if (!isDark()) { requestAnimationFrame(draw); return; }
+    const [R, G, B] = [255, 158, 207];
+    ctx.clearRect(0,0,w,h);
+    stars.forEach(s=>{
+      s.alpha += (Math.random()*0.1 - 0.01);
+      s.alpha = Math.min(1, Math.max(0, s.alpha));
+      const vertFade = 1 - Math.pow(s.y/h, 0.3);
+      const a = vertFade * s.alpha;
+      if(!inExcluded(s.x, s.y)){
+          ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+          ctx.fillStyle = `rgba(${R},${G},${B},${Math.min(1, s.alpha * 2)})`;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = "rgba(255,158,207,0.85)";
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      s.x = (s.x + s.vx + w) % w; s.y = (s.y + s.vy + h) % h;
+    });
+    requestAnimationFrame(draw);
+  }
+
+  init(); draw();
+  window.addEventListener("resize", ()=>{
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(()=>{
+      const nw = window.innerWidth, nh = window.innerHeight;
+      if(Math.abs(nw-lastW) > 100 || Math.abs(nh-lastH) > 100){ init(); }
+    },200);
+  });
+})();
+  </script>
+  <!-- Chatbot -->
+  <div id="chatbot">
+    <div id="chat-window">
+      <div id="chat-suggestions">
+        <span class="faq-question">Tell me about Aarshika</span>
+        <span class="faq-question">What projects has Aarshika built?</span>
+        <span class="faq-question">How can I contact Aarshika?</span>
+        <span class="faq-question">What is the Trade Clustering app?</span>
+      </div>
+      <div id="chat-log"></div>
+      <div id="chat-input-area">
+        <input id="chat-input" placeholder="Ask me anything..." />
+        <button id="send-chat" class="btn-primary">Send</button>
+        <button id="clear-chat" class="btn-primary">Clear Chat</button>
+      </div>
+    </div>
+    <button id="toggle-chat" class="btn-primary">💬 Open AI Assistant</button>
+  </div>
+  <script>
+  const API_BASE = "https://llm-api-jpnc.onrender.com"; 
+  const RAG_API = `${API_BASE}/rag`;
+  const RAG_CLEAR_API = `${API_BASE}/rag/clear`;
+
+  const toggleBtn  = document.getElementById('toggle-chat');
+  const chatWindow = document.getElementById('chat-window');
+  const chatLog    = document.getElementById('chat-log');
+  const chatInput  = document.getElementById('chat-input');
+  const sendBtn    = document.getElementById('send-chat');
+  const clearBtn   = document.getElementById('clear-chat');
+
+  const chatHistory = [];
+  let hasGreeted = false;
+
+  toggleBtn.addEventListener('click', () => {
+    const isOpen = chatWindow.style.display === 'flex';
+    chatWindow.style.display = isOpen ? 'none' : 'flex';
+    toggleBtn.innerText = isOpen ? '💬 Open AI Assistant' : '❌ Minimise AI Assistant';
+    if (!hasGreeted && !isOpen) {
+      addBotMessage("Ask me anything about <strong>Aarshika</strong> ✨");
+      hasGreeted = true;
+    }
+  });
+
+  sendBtn.addEventListener('click', sendChat);
+  chatInput.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); sendChat(); }});
+
+  async function sendChat(){
+    const query = chatInput.value.trim();
+    if(!query) return;
+
+    const wrap = document.createElement('div'); wrap.classList.add('chat-pair');
+    const u = document.createElement('div'); u.className='chat-msg user';
+    u.innerHTML = `🧑‍💻 <strong>You:</strong> ${escapeHtml(query)}`;
+    const b = document.createElement('div'); b.className='chat-msg bot';
+    b.innerHTML = `🤖 <strong>Assistant:</strong> <span class="spinner"></span>`;
+    wrap.appendChild(u); wrap.appendChild(b);
+    chatInput.value=''; chatLog.appendChild(wrap); chatLog.scrollTop = chatLog.scrollHeight;
+
+    chatHistory.push({ role:'user', content: query });
+
+    try{
+      const res = await fetch(RAG_API, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ query, history: chatHistory.slice(-12) })
+      });
+      if(!res.ok){ throw new Error(await res.text() || `HTTP ${res.status}`); }
+      const data = await res.json();
+      const answer = data.answer ?? data.result ?? "Sorry, I couldn't find that.";
+      b.innerHTML = renderBotMessage(answer);
+      chatHistory.push({ role:'assistant', content: stripHtml(answer) });
+    }catch(err){
+      console.error(err);
+      b.innerHTML = `🤖 <strong>Assistant:</strong> Sorry — I couldn't reach the API.`;
+    }finally{
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+  }
+
+  clearBtn.addEventListener('click', async () => {
+    chatLog.innerHTML = ''; chatHistory.length = 0; hasGreeted = false;
+    try{ await fetch(RAG_CLEAR_API, { method:'POST' }); }catch(e){}
+    addBotMessage("Chat history cleared. Ready for a fresh start!");
+  });
+
+  document.querySelectorAll('.faq-question').forEach(el=>{
+    el.addEventListener('click', ()=>{ chatInput.value = el.textContent; sendChat(); });
+  });
+
+  function addBotMessage(msg){
+    const wrap = document.createElement('div'); wrap.classList.add('chat-pair');
+    const b = document.createElement('div'); b.className='chat-msg bot';
+    b.innerHTML = `🤖 <strong>Assistant:</strong> ${msg}`;
+    wrap.appendChild(b); chatLog.appendChild(wrap); chatLog.scrollTop = chatLog.scrollHeight;
+  }
+  function renderBotMessage(answer){
+    const safe = escapeHtml(answer).replace(/\n/g,'<br>');
+    return `🤖 <strong>Assistant:</strong> ${safe}`;
+  }
+  function stripHtml(html){ const d=document.createElement('div'); d.innerHTML=html; return d.textContent||''; }
+  function escapeHtml(s){ return s.replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;','\'':'&#39;'}[c])); }
   </script>
 </body>
 </html>
