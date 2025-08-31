@@ -774,7 +774,8 @@
   #clear-chat{background:#d63031}
   #toggle-chat{
     position:fixed;bottom:30px;right:30px;font-size:1rem;padding:.8rem 1.4rem;white-space:nowrap;background:var(--primary);
-    color:#fff;box-shadow:var(--shadow);border:none;z-index:10000
+    color:#fff;box-shadow:var(--shadow);border:none;z-index:10000;
+    cursor: pointer;
   }
   #chat-suggestions{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem}
   .faq-question{
@@ -1307,7 +1308,7 @@ new Typed("#typed-text", {
     chatWindow.style.display = isOpen ? 'none' : 'flex';
     toggleBtn.innerText = isOpen ? '💬 Open AI Assistant' : '❌ Minimise AI Assistant';
     if (!hasGreeted && !isOpen) {
-      addBotMessage("Ask me anything about <strong>Aarshika</strong> ✨");
+      addBotMessage("Ask me anything about <strong>Aarshika</strong> ✨. If the bot is asleep, give it a moment to wake up!");
       hasGreeted = true;
     }
   });
